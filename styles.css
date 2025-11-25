@@ -1,0 +1,42 @@
+.navbar{
+  background-color: #0d0d0d;
+}
+#HUB{
+  color:#00c853;
+  font-weight:bold;
+}
+#CPU{
+background-color:#F5F5F5;                  
+padding-bottom: 30px;            
+border-radius: 10px;            
+}
+#CPU h2{
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight:600;
+  font-family:"Helvetica Neue";
+  color: #002b5b;
+}
+#Monitor{              
+  padding-bottom: 30px;         
+  border-radius: 10px;          
+}
+#Monitor h2{
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight:600;
+  font-family:"Helvetica Neue";
+  color: #002b5b;
+}
+#GPU{
+  background-color:#F5F5F5;
+  padding-bottom: 30px;         
+  border-radius: 10px;  
+}
+#GPU h2{
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight:600;
+  font-family:"Helvetica Neue";
+  color: #002b5b;
+}
