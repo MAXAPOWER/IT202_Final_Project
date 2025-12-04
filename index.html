@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel ="stylesheet" href="styles.css">
   <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <title>Document</title>
+  <title>HardwareHUB</title>
 </head>
 <body>
   <nav class="navbar" style="background-color: #e3f2fd;" data-bs-theme="light">
@@ -21,7 +21,7 @@
       <form class="d-flex me-3" style="width: 180px; ">
         <input class="form-control form-control-sm" type="search" placeholder="Search Parts..." />
       </form>
-      <a class="nav-link fw-semibold" href="#">🛒</a>
+      <a class="nav-link fw-semibold" href="cart.html">🛒</a>
     </div>
   </div>
 </nav>
@@ -38,7 +38,10 @@
         <p class="card-text fw-bold flex-grow-1">Intel® Core™ i9-14900K</p>
         <p class="small text-muted">24-core processor with exceptional multi-threaded performance for gaming and productivity.</p>
         <p class="text-success fs-5 fw-semibold">$544.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Intel® Core™ i9-14900K"
+                data-price="544.99"
+                data-image="Images/IntelCore24-CoreProcessorImage.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -51,7 +54,10 @@
         <p class="card-text fw-bold flex-grow-1">Intel® Core™ i7-14700K</p>
         <p class="small text-muted">20-core CPU that delivers a powerful balance of gaming and multi-threaded productivity</p>
         <p class="text-success fs-5 fw-semibold">$339.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Intel® Core™ i7-14700K"
+                data-price="339.99"
+                data-image="Images/intelCorei7.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -64,7 +70,10 @@
         <p class="card-text fw-bold flex-grow-1">AMD Ryzen 7 7800X3D</p>
         <p class="small text-muted">8 core processor built for exceptional gaming and multi-tasking performance</p>
         <p class="text-success fs-5 fw-semibold">$379.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="AMD Ryzen 7 7800X3D"
+                data-price="379.99"
+                data-image="Images/AMDRYZEN77800.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -77,7 +86,10 @@
     <p class="card-text fw-bold flex-grow-1">AMD Ryzen 5 3600 6-Core</p>
     <p class="small text-muted">6-core processor,budget-friendly choice for reliable entry-level gaming and basic desktop use</p>
     <p class="text-success fs-5 fw-semibold">$74.99</p>
-    <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+    <button class="btn btn-primary w-100 mt-auto add-to-cart"
+            data-name="AMD Ryzen 5 3600 6-Core"
+            data-price="74.99"
+            data-image="Images/AMDryzen5.webp">Add to Cart</button>
   </div>
 </div>
   </div>
@@ -96,7 +108,10 @@
         <p class="card-text fw-bold flex-grow-1">ASUS ROG Swift 240Hz Gaming Monitor</p>
         <p class="small text-muted">Elite high-refresh-rate monitor, featuring QHD or OLED technology, maximum speed and responsiveness for competitive gamers</p>
         <p class="text-success fs-5 fw-semibold">$1099.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="ASUS ROG Swift 240Hz Gaming Monitor"
+                data-price="1099.99"
+                data-image="Images/ASUSmonitor.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -109,7 +124,10 @@
         <p class="card-text fw-bold flex-grow-1">Dell 4K UHD 120Hz FreeSync Premium Monitor</p>
         <p class="small text-muted">High-resolution display, stunning balance of visual detail and smooth motion, excellent for 4K gaming and professional work</p>
         <p class="text-success fs-5 fw-semibold">$259.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Dell 4K UHD 120Hz FreeSync Premium Monitor"
+                data-price="259.99"
+                data-image="Images/DellMonitor120hz.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -122,7 +140,10 @@
         <p class="card-text fw-bold flex-grow-1">Samsung Odyssey 180Hz Gaming Monitor</p>
         <p class="small text-muted">Accessible gaming monitor, featuring a fast IPS panel with a 180Hz refresh rate for smooth fluid gameplay</p>
         <p class="text-success fs-5 fw-semibold">$199.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Samsung Odyssey 180Hz Gaming Monitor"
+                data-price="199.99"
+                data-image="Images/SamsungMonitor180hz.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -135,7 +156,10 @@
         <p class="card-text fw-bold flex-grow-1">LG UltraGear 27" QHD 240Hz NVIDIA G-SYNC Monitor </p>
         <p class="small text-muted">Top tier 27-inch QHD monitor with 240Hz IPS panel, perfect blend of high resolution, vibrant colors, and esports-level speed</p>
         <p class="text-success fs-5 fw-semibold">$279.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="LG UltraGear 27\" QHD 240Hz NVIDIA G-SYNC Monitor"
+                data-price="279.99"
+                data-image="Images/LGMonitor240hz.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -154,7 +178,10 @@
         <p class="card-text fw-bold flex-grow-1">AMD Radeon RX 9070 XT Graphics Card</p>
         <p class="small text-muted">High-end AMD card on the RDNA 4 architecture, offering excellent 1440p and solid 4K performance</p>
         <p class="text-success fs-5 fw-semibold">$599.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="AMD Radeon RX 9070 XT Graphics Card"
+                data-price="599.99"
+                data-image="Images/ADMradeonrx9070.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -167,7 +194,10 @@
         <p class="card-text fw-bold flex-grow-1">Nvidia GeForce RTX 5070 Ti Graphics Card </p>
         <p class="small text-muted">Powerful, enthusiast-grade card that delivers a great balance of 4K gaming performance and the latest AI features like DLSS 4 and ray tracing</p>
         <p class="text-success fs-5 fw-semibold">$749.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Nvidia GeForce RTX 5070 Ti Graphics Card"
+                data-price="749.99"
+                data-image="Images/NvidiaGeForceGPU.webp">Add to Cart</button>
       </div>
     </div>
 
@@ -180,7 +210,10 @@
         <p class="card-text fw-bold flex-grow-1">Intel Arc B570 Guardian OC Graphics Card</p>
         <p class="small text-muted">Great budget-friendly 1080p and entry-level 1440p gaming with solid VRAM capacity and modern features like XeSS</p>
         <p class="text-success fs-5 fw-semibold">$249.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="Intel Arc B570 Guardian OC Graphics Card"
+                data-price="249.99"
+                data-image="Images/IntelArcGPU.webp">Add to Cart</button>
       </div>
     </div> 
 
@@ -193,7 +226,10 @@
         <p class="card-text fw-bold flex-grow-1">PNY NVIDIA GeForce RTX 5060 Graphics Card</p>
         <p class="small text-muted">Power-efficient GPU designed to provide a high-quality 1080p gaming experience with support for the newest NVIDIA features like DLSS 4 and ray tracing</p>
         <p class="text-success fs-5 fw-semibold">$279.99</p>
-        <button class="btn btn-primary w-100 mt-auto">Add to Cart</button>
+        <button class="btn btn-primary w-100 mt-auto add-to-cart"
+                data-name="PNY NVIDIA GeForce RTX 5060 Graphics Card"
+                data-price="279.99"
+                data-image="Images/cheapNvidiaGpu.avif">Add to Cart</button>
       </div>
     </div> 
   </div>

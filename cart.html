@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <title>Shopping Cart - HardwareHUB</title>
+</head>
+<body>
+  <nav class="navbar" style="background-color: #e3f2fd;" data-bs-theme="light">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand me-4" href="index.html" style="padding-left: 10px;">Hardware<span id="HUB">HUB</span></a>
+
+      <ul class="navbar-nav flex-row gap-4 mx-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#CPU">CPUs</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#Monitor">Monitors</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#GPU">GPUs</a></li>
+      </ul>
+      <form class="d-flex me-3" style="width: 180px;">
+        <input class="form-control form-control-sm" type="search" placeholder="Search Parts..." />
+      </form>
+      <a class="nav-link fw-semibold" href="cart.html">🛒</a>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h1 class="mb-4">Shopping Cart</h1>
+
+    <div id="empty-cart-message" style="display: none;">
+      <div class="alert alert-info text-center">
+        <h4>Your cart is empty</h4>
+        <p>Add some products to your cart to see them here!</p>
+        <a href="index.html" class="btn btn-primary">Continue Shopping</a>
+      </div>
+    </div>
+
+    <div id="cart-content" style="display: none;">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cart-items">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <a href="index.html" class="btn btn-secondary">Continue Shopping</a>
+          <button class="btn btn-danger" id="clear-cart-btn">Clear Cart</button>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4>Order Summary</h4>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Total Items:</span>
+                <span id="total-items">0</span>
+              </div>
+              <div class="d-flex justify-content-between mb-3">
+                <strong>Total:</strong>
+                <strong class="text-success fs-4">$<span id="total">0.00</span></strong>
+              </div>
+              <a href="checkout.html" class="btn btn-primary w-100">Proceed to Checkout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="cart-page.js"></script>
+</body>
+</html>
