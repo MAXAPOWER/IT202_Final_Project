@@ -6,7 +6,6 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 let cart = [];
-let orders = [];
 
 app.get('/api/cart', function(req, res) {
   let total = 0;
@@ -82,11 +81,6 @@ app.post('/api/cart/remove', function(req, res) {
   res.json({ message: 'Item removed from cart', cart: cart });
 });
 
-app.post('/api/cart/clear', function(req, res) {
-  cart = [];
-  res.json({ message: 'Cart cleared', cart: cart });
-});
-
 app.post('/api/checkout', function(req, res) {
   if (cart.length === 0) {
     res.status(400).json({ error: 'Cart is empty' });
@@ -99,13 +93,11 @@ app.post('/api/checkout', function(req, res) {
   }
 
   let order = {
-    orderId: orders.length + 1,
     items: cart.slice(),
     total: total,
     date: new Date().toISOString()
   };
 
-  orders.push(order);
   cart = [];
 
   res.json({
@@ -114,10 +106,6 @@ app.post('/api/checkout', function(req, res) {
   });
 });
 
-app.get('/api/orders', function(req, res) {
-  res.json({ orders: orders });
-});
-
 app.listen(port, function() {
-  console.log(' server running at http://localhost:' + port);
+  console.log('server running at http://localhost:' + port);
 });

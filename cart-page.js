@@ -1,18 +1,5 @@
 $(document).ready(function() {
   loadCart();
-
-  $('#clear-cart-btn').click(function() {
-    if (confirm('Are you sure you want to clear your cart?')) {
-      $.ajax({
-        url: '/api/cart/clear',
-        type: 'POST',
-        contentType: 'application/json',
-        success: function(response) {
-          loadCart();
-        }
-      });
-    }
-  });
 });
 
 function loadCart() {
