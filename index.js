@@ -67,20 +67,6 @@ app.post('/api/cart/update', function(req, res) {
   res.json({ message: 'Cart updated', cart: cart });
 });
 
-app.post('/api/cart/remove', function(req, res) {
-  let name = req.body.name;
-
-  let newCart = [];
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].name !== name) {
-      newCart.push(cart[i]);
-    }
-  }
-  cart = newCart;
-
-  res.json({ message: 'Item removed from cart', cart: cart });
-});
-
 app.post('/api/checkout', function(req, res) {
   if (cart.length === 0) {
     res.status(400).json({ error: 'Cart is empty' });

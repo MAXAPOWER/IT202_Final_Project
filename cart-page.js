@@ -58,9 +58,6 @@ function displayCart(cart, total, itemCount) {
         '</div>' +
       '</td>' +
       '<td>$' + subtotal.toFixed(2) + '</td>' +
-      '<td>' +
-        '<button class="btn btn-sm btn-danger remove-btn" data-name="' + item.name + '">Remove</button>' +
-      '</td>' +
     '</tr>';
 
     cartItemsDiv.append(row);
@@ -80,11 +77,6 @@ function displayCart(cart, total, itemCount) {
     var qty = $(this).data('qty');
     updateQuantity(name, qty + 1);
   });
-
-  $('.remove-btn').click(function() {
-    var name = $(this).data('name');
-    removeItem(name);
-  });
 }
 
 function updateQuantity(name, quantity) {
@@ -95,20 +87,6 @@ function updateQuantity(name, quantity) {
     data: JSON.stringify({
       name: name,
       quantity: quantity
-    }),
-    success: function(response) {
-      loadCart();
-    }
-  });
-}
-
-function removeItem(name) {
-  $.ajax({
-    url: '/api/cart/remove',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      name: name
     }),
     success: function(response) {
       loadCart();
