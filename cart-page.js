@@ -1,159 +1,130 @@
-let cart = [];
-if (localStorage.getItem('cart')) {
-  cart = JSON.parse(localStorage.getItem('cart'));
-}
+$(document).ready(function() {
+  loadCart();
 
-function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function calculateTotal() {
-  let total = 0;
-  for (let i = 0; i < cart.length; i++) {
-    total = total + (cart[i].price * cart[i].quantity);
-  }
-  return total;
-}
-
-function getTotalItems() {
-  let count = 0;
-  for (let i = 0; i < cart.length; i++) {
-    count = count + cart[i].quantity;
-  }
-  return count;
-}
-
-function updateQuantity(productName, newQuantity) {
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].name === productName) {
-      if (newQuantity <= 0) {
-        removeItem(productName);
-      } else {
-        cart[i].quantity = newQuantity;
-      }
-      break;
+  $('#clear-cart-btn').click(function() {
+    if (confirm('Are you sure you want to clear your cart?')) {
+      $.ajax({
+        url: '/api/cart/clear',
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(response) {
+          loadCart();
+        }
+      });
     }
-  }
-  saveCart();
-  displayCart();
-}
+  });
+});
 
-function removeItem(productName) {
-  let newCart = [];
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].name !== productName) {
-      newCart.push(cart[i]);
+function loadCart() {
+  $.ajax({
+    url: '/api/cart',
+    type: 'GET',
+    success: function(response) {
+      displayCart(response.cart, response.total, response.itemCount);
+      updateCartBadge(response.itemCount);
     }
-  }
-  cart = newCart;
-  saveCart();
-  displayCart();
+  });
 }
 
-function clearCart() {
-  if (confirm('Are you sure you want to clear your cart?')) {
-    cart = [];
-    saveCart();
-    displayCart();
+function updateCartBadge(count) {
+  var badge = $('#cart-badge');
+  if (count > 0) {
+    badge.text(count);
+    badge.show();
+  } else {
+    badge.hide();
   }
 }
 
-function displayCart() {
-  let cartItemsDiv = document.getElementById('cart-items');
-  let emptyMessage = document.getElementById('empty-cart-message');
-  let cartContent = document.getElementById('cart-content');
+function displayCart(cart, total, itemCount) {
+  var cartItemsDiv = $('#cart-items');
+  var emptyMessage = $('#empty-cart-message');
+  var cartContent = $('#cart-content');
 
   if (cart.length === 0) {
-    emptyMessage.style.display = 'block';
-    cartContent.style.display = 'none';
+    emptyMessage.show();
+    cartContent.hide();
     return;
   }
 
-  emptyMessage.style.display = 'none';
-  cartContent.style.display = 'block';
+  emptyMessage.hide();
+  cartContent.show();
+  cartItemsDiv.empty();
 
-  cartItemsDiv.textContent = '';
+  for (var i = 0; i < cart.length; i++) {
+    var item = cart[i];
+    var subtotal = item.price * item.quantity;
 
-  for (let i = 0; i < cart.length; i++) {
-    let item = cart[i];
-    let subtotal = item.price * item.quantity;
+    var row = '<tr>' +
+      '<td>' +
+        '<div class="d-flex align-items-center">' +
+          '<img src="' + item.image + '" alt="' + item.name + '" style="width: 60px; height: 60px; object-fit: contain;" class="me-3">' +
+          '<span>' + item.name + '</span>' +
+        '</div>' +
+      '</td>' +
+      '<td>$' + item.price.toFixed(2) + '</td>' +
+      '<td>' +
+        '<div class="d-flex align-items-center gap-2">' +
+          '<button class="btn btn-sm btn-outline-secondary minus-btn" data-name="' + item.name + '" data-qty="' + item.quantity + '">-</button>' +
+          '<span class="mx-2">' + item.quantity + '</span>' +
+          '<button class="btn btn-sm btn-outline-secondary plus-btn" data-name="' + item.name + '" data-qty="' + item.quantity + '">+</button>' +
+        '</div>' +
+      '</td>' +
+      '<td>$' + subtotal.toFixed(2) + '</td>' +
+      '<td>' +
+        '<button class="btn btn-sm btn-danger remove-btn" data-name="' + item.name + '">Remove</button>' +
+      '</td>' +
+    '</tr>';
 
-    let row = document.createElement('tr');
-
-    let productCell = document.createElement('td');
-    let productDiv = document.createElement('div');
-    productDiv.className = 'd-flex align-items-center';
-
-    let img = document.createElement('img');
-    img.src = item.image;
-    img.alt = item.name;
-    img.style.width = '60px';
-    img.style.height = '60px';
-    img.style.objectFit = 'contain';
-    img.className = 'me-3';
-
-    let nameSpan = document.createElement('span');
-    nameSpan.textContent = item.name;
-
-    productDiv.appendChild(img);
-    productDiv.appendChild(nameSpan);
-    productCell.appendChild(productDiv);
-
-    let priceCell = document.createElement('td');
-    priceCell.textContent = '$' + item.price.toFixed(2);
-
-    let quantityCell = document.createElement('td');
-    let quantityDiv = document.createElement('div');
-    quantityDiv.className = 'd-flex align-items-center gap-2';
-
-    let minusBtn = document.createElement('button');
-    minusBtn.className = 'btn btn-sm btn-outline-secondary';
-    minusBtn.textContent = '-';
-    minusBtn.onclick = function() {
-      updateQuantity(item.name, item.quantity - 1);
-    };
-
-    let quantitySpan = document.createElement('span');
-    quantitySpan.className = 'mx-2';
-    quantitySpan.textContent = item.quantity;
-
-    let plusBtn = document.createElement('button');
-    plusBtn.className = 'btn btn-sm btn-outline-secondary';
-    plusBtn.textContent = '+';
-    plusBtn.onclick = function() {
-      updateQuantity(item.name, item.quantity + 1);
-    };
-
-    quantityDiv.appendChild(minusBtn);
-    quantityDiv.appendChild(quantitySpan);
-    quantityDiv.appendChild(plusBtn);
-    quantityCell.appendChild(quantityDiv);
-
-    let subtotalCell = document.createElement('td');
-    subtotalCell.textContent = '$' + subtotal.toFixed(2);
-
-    let actionCell = document.createElement('td');
-    let removeBtn = document.createElement('button');
-    removeBtn.className = 'btn btn-sm btn-danger';
-    removeBtn.textContent = 'Remove';
-    removeBtn.onclick = function() {
-      removeItem(item.name);
-    };
-    actionCell.appendChild(removeBtn);
-
-    row.appendChild(productCell);
-    row.appendChild(priceCell);
-    row.appendChild(quantityCell);
-    row.appendChild(subtotalCell);
-    row.appendChild(actionCell);
-
-    cartItemsDiv.appendChild(row);
+    cartItemsDiv.append(row);
   }
 
-  document.getElementById('total-items').textContent = getTotalItems();
-  document.getElementById('total').textContent = calculateTotal().toFixed(2);
+  $('#total-items').text(itemCount);
+  $('#total').text(total.toFixed(2));
+
+  $('.minus-btn').click(function() {
+    var name = $(this).data('name');
+    var qty = $(this).data('qty');
+    updateQuantity(name, qty - 1);
+  });
+
+  $('.plus-btn').click(function() {
+    var name = $(this).data('name');
+    var qty = $(this).data('qty');
+    updateQuantity(name, qty + 1);
+  });
+
+  $('.remove-btn').click(function() {
+    var name = $(this).data('name');
+    removeItem(name);
+  });
 }
 
-document.getElementById('clear-cart-btn').addEventListener('click', clearCart);
+function updateQuantity(name, quantity) {
+  $.ajax({
+    url: '/api/cart/update',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      name: name,
+      quantity: quantity
+    }),
+    success: function(response) {
+      loadCart();
+    }
+  });
+}
 
-displayCart();
+function removeItem(name) {
+  $.ajax({
+    url: '/api/cart/remove',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      name: name
+    }),
+    success: function(response) {
+      loadCart();
+    }
+  });
+}

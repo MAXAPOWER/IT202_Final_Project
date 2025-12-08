@@ -1,69 +1,55 @@
-let cart = [];
-if (localStorage.getItem('cart')) {
-  cart = JSON.parse(localStorage.getItem('cart'));
+$(document).ready(function() {
+  processCheckout();
+});
+
+function processCheckout() {
+  $.ajax({
+    url: '/api/cart',
+    type: 'GET',
+    success: function(response) {
+      if (response.cart.length === 0) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      $.ajax({
+        url: '/api/checkout',
+        type: 'POST',
+        contentType: 'application/json',
+        success: function(orderResponse) {
+          displayOrderSummary(orderResponse.order);
+        },
+        error: function(error) {
+          alert('Error processing checkout');
+          window.location.href = 'cart.html';
+        }
+      });
+    }
+  });
 }
 
-function calculateTotal() {
-  let total = 0;
-  for (let i = 0; i < cart.length; i++) {
-    total = total + (cart[i].price * cart[i].quantity);
+function displayOrderSummary(order) {
+  var orderItemsDiv = $('#order-items');
+  orderItemsDiv.empty();
+
+  for (var i = 0; i < order.items.length; i++) {
+    var item = order.items[i];
+    var subtotal = item.price * item.quantity;
+
+    var row = '<tr>' +
+      '<td>' +
+        '<div class="d-flex align-items-center">' +
+          '<img src="' + item.image + '" alt="' + item.name + '" style="width: 50px; height: 50px; object-fit: contain;" class="me-2">' +
+          '<span>' + item.name + '</span>' +
+        '</div>' +
+      '</td>' +
+      '<td>$' + item.price.toFixed(2) + '</td>' +
+      '<td>' + item.quantity + '</td>' +
+      '<td>$' + subtotal.toFixed(2) + '</td>' +
+    '</tr>';
+
+    orderItemsDiv.append(row);
   }
-  return total;
+
+  $('#order-total').text(order.total.toFixed(2));
 }
-
-function displayOrderSummary() {
-  let orderItemsDiv = document.getElementById('order-items');
-
-  if (cart.length === 0) {
-    window.location.href = 'index.html';
-    return;
-  }
-
-  for (let i = 0; i < cart.length; i++) {
-    let item = cart[i];
-    let subtotal = item.price * item.quantity;
-
-    let row = document.createElement('tr');
-
-    let productCell = document.createElement('td');
-    let productDiv = document.createElement('div');
-    productDiv.className = 'd-flex align-items-center';
-
-    let img = document.createElement('img');
-    img.src = item.image;
-    img.alt = item.name;
-    img.style.width = '50px';
-    img.style.height = '50px';
-    img.style.objectFit = 'contain';
-    img.className = 'me-2';
-
-    let nameSpan = document.createElement('span');
-    nameSpan.textContent = item.name;
-
-    productDiv.appendChild(img);
-    productDiv.appendChild(nameSpan);
-    productCell.appendChild(productDiv);
-
-    let priceCell = document.createElement('td');
-    priceCell.textContent = '$' + item.price.toFixed(2);
-
-    let quantityCell = document.createElement('td');
-    quantityCell.textContent = item.quantity;
-
-    let subtotalCell = document.createElement('td');
-    subtotalCell.textContent = '$' + subtotal.toFixed(2);
-
-    row.appendChild(productCell);
-    row.appendChild(priceCell);
-    row.appendChild(quantityCell);
-    row.appendChild(subtotalCell);
-
-    orderItemsDiv.appendChild(row);
-  }
-
-  document.getElementById('order-total').textContent = calculateTotal().toFixed(2);
-
-  localStorage.removeItem('cart');
-}
-
-displayOrderSummary();
